@@ -3,12 +3,41 @@ import {
   StyleSheet,
   Image,
   View,
-  Button,
   TouchableOpacity,
+  Animated,
+  Dimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useRef } from "react";
+import Auth from "./auth";
+import SignUp from "./signUp";
+import { screenHeight } from "@/constants/Const";
 
 export default function Home() {
+  const slideHeight = screenHeight / 1.5;
+
+  const slideAnim = useRef(new Animated.Value(slideHeight)).current;
+
+  const handleSignIn = () => {
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const slideHeightSignUp = screenHeight / 1.5;
+
+  const slideAnimSignUp = useRef(new Animated.Value(slideHeightSignUp)).current;
+
+  const handleSignUp = () => {
+    Animated.timing(slideAnimSignUp, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  };
+
   return (
     <LinearGradient
       colors={["#dbeafe", "#ffffff"]}
@@ -28,14 +57,14 @@ export default function Home() {
       >
         <Text className="m-8 text-3xl font-bold">Welcome Back</Text>
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={handleSignIn}
           className="rounded-lg bg-orange-600 w-72 h-12 m-4"
           style={styles.buttons}
         >
           <Text className="font-bold text-lg text-white">SIGN IN</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={handleSignUp}
           className="rounded-lg border-orange-600 border-2 w-72 h-12"
           style={styles.buttons}
         >
@@ -62,6 +91,8 @@ export default function Home() {
           </View>
         </View>
       </View>
+      <Auth slideHeight={slideHeight} slideAnim={slideAnim} />
+      <SignUp slideHeight={slideHeightSignUp} slideAnim={slideAnimSignUp} />
     </LinearGradient>
   );
 }
