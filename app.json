@@ -4,7 +4,7 @@
     "slug": "coaching",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/coaching.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,8 +13,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/coaching.png",
+        "backgroundColor": "#000"
       }
     },
     "web": {
@@ -27,8 +27,8 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
+          "image": "./assets/images/coaching.png",
+          "imageWidth": 600,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
