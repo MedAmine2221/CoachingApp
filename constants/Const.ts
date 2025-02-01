@@ -1,10 +1,19 @@
+import { IconSymbolName } from "@/components/ui/IconSymbol";
 import { useRef } from "react";
-import { Animated, Dimensions, PanResponder } from "react-native";
+import { Animated, Dimensions, KeyboardTypeOptions, PanResponder } from "react-native";
 
 const screenHeight = Dimensions.get("window").height;
 interface AuthProps {
   slideHeight: number;
   slideAnim: Animated.Value;
+}
+interface InputProps {
+  isPassword?: Boolean;
+  editable?: Boolean;
+  multiline?: Boolean;
+  keyboardType?: KeyboardTypeOptions;
+  iconName?: String
+  placeholder?:String
 }
 const gestHandler = ({ slideHeight, slideAnim }: AuthProps) => {
   const panResponder = useRef(
@@ -36,4 +45,4 @@ const gestHandler = ({ slideHeight, slideAnim }: AuthProps) => {
   ).current;
   return panResponder;
 };
-export { screenHeight, gestHandler, AuthProps };
+export { screenHeight, gestHandler, AuthProps, InputProps };
