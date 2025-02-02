@@ -1,4 +1,10 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import React, { useState } from "react";
 import Icon from "react-native-vector-icons/Entypo";
 import { InputProps } from "@/constants/Const";
@@ -10,54 +16,100 @@ const Input = ({
   keyboardType,
   iconName,
   placeholder,
+  label,
+  value,
+  onChange,
 }: InputProps) => {
   const [eyeOff, setEyeOff] = useState(isPassword);
+  const [isFocused, setIsFocused] = useState(false);
+
   return (
-    <View>
+    <View style={styles.container}>
       <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+        style={[
+          styles.inputContainer,
+          { borderColor: isFocused ? "#194072" : "#bbb", borderWidth: 2 },
+        ]}
       >
+        <Text
+          style={[
+            styles.label,
+            {
+              top: isFocused || value ? -10 : 20,
+              fontSize: isFocused || value ? 12 : 16,
+              color: isFocused ? "#194072" : "#bbb",
+            },
+          ]}
+        >
+          {label}
+        </Text>
+
         <Icon
           name={iconName}
           size={25}
-          style={{ top: -50, left: 10 }}
-          color={"#bbb"}
+          style={styles.icon}
+          color={isFocused ? "#194072" : "#bbb"}
         />
+
         <TextInput
           editable={editable}
           multiline={multiline}
-          className="border-2 w-80 m-4"
-          placeholder={placeholder}
-          style={{ top: -50, borderColor: "#f37921", borderRadius: 50 }}
+          style={styles.textInput}
+          placeholder={isFocused ? placeholder : ""}
           secureTextEntry={eyeOff}
           keyboardType={keyboardType}
-          // onChangeText={text => onChangeText(text)}
-          // value={value}
-          // style={styles.textInput}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onChangeText={onChange}
+          value={value}
         />
+        {isPassword && (
+          <TouchableOpacity
+            style={styles.eyeIcon}
+            onPress={() => setEyeOff(!eyeOff)}
+          >
+            <Icon
+              name={eyeOff ? "eye" : "eye-with-line"}
+              size={25}
+              color={"#bbb"}
+            />
+          </TouchableOpacity>
+        )}
       </View>
-      {isPassword && eyeOff && (
-        <TouchableOpacity
-          style={{ top: -100, left: 270 }}
-          onPress={() => setEyeOff(!eyeOff)}
-        >
-          <Icon name="eye" size={30} color={"#bbb"} />
-        </TouchableOpacity>
-      )}
-      {isPassword && !eyeOff && (
-        <TouchableOpacity
-          style={{ top: -100, left: 270 }}
-          onPress={() => setEyeOff(!eyeOff)}
-        >
-          <Icon name="eye-with-line" size={30} color={"#bbb"} />
-        </TouchableOpacity>
-      )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 10,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: 50,
+    paddingHorizontal: 10,
+    height: 60,
+    width: 300,
+    position: "relative",
+  },
+  label: {
+    position: "absolute",
+    left: 50,
+    backgroundColor: "#fff",
+    paddingHorizontal: 5,
+  },
+  icon: {
+    marginRight: 10,
+  },
+  textInput: {
+    flex: 1,
+    fontSize: 16,
+  },
+  eyeIcon: {
+    marginLeft: 10,
+  },
+});
 
 export default Input;
