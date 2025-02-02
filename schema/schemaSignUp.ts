@@ -26,7 +26,9 @@ const signUpSchema = z
       .regex(new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/), {
         message: "Invalid email format",
       }),
-    phone: z.string(),
+    phone: z.string().regex(new RegExp(/^(\+216|00216)?[2459]\d{7}$/), {
+      message: "Numéro de téléphone tunisien invalide",
+    }),
   })
   .superRefine(({ confirmPassword, password }, ctx) => {
     if (confirmPassword !== password) {
