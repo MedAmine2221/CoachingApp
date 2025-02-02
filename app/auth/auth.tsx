@@ -2,8 +2,6 @@ import {
   Text,
   Animated,
   StyleSheet,
-  PanResponder,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -11,9 +9,24 @@ import React, { useRef } from "react";
 import { AuthProps, gestHandler } from "@/constants/Const";
 import Input from "@/components/Input";
 import { LinearGradient } from "expo-linear-gradient";
+import DontHaveAccount from "@/components/DontHaveAccount";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { authFormType, authSchema } from "@/schema/schemaAuth";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 const Auth: React.FC<AuthProps> = ({ slideHeight, slideAnim }) => {
   const panResponder = gestHandler({ slideHeight, slideAnim });
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<authFormType>({
+    resolver: zodResolver(authSchema),
+  });
 
+  const onSubmit: SubmitHandler<authFormType> = (data: authFormType) => {
+    console.log(data);
+  };
   return (
     <Animated.View
       {...panResponder.panHandlers}
@@ -25,24 +38,75 @@ const Auth: React.FC<AuthProps> = ({ slideHeight, slideAnim }) => {
         },
       ]}
     >
-      <Input
-        keyboardType={"email-address"}
-        iconName={"user"}
-        placeholder={"Username"}
+      <Text
+        className="bottom-16 font-bold text-4xl"
+        style={{ color: "#194072" }}
+      >
+        Login
+      </Text>
+      <Controller
+        control={control}
+        render={({
+          field: { onChange, onBlur, value },
+          fieldState: { error },
+        }) => (
+          <Input
+            iconName={"user"}
+            placeholder={"Username"}
+            label={"Username"}
+            value={value}
+            onChange={onChange}
+          />
+        )}
+        name="username"
       />
-      <Input isPassword={true} iconName={"key"} placeholder={"Password"} />
+      {errors.username && (
+        <Text style={{ color: "#ff8566" }}>{errors.username.message}</Text>
+      )}
+
+      <Controller
+        control={control}
+        render={({
+          field: { onChange, onBlur, value },
+          fieldState: { error },
+        }) => (
+          <Input
+            isPassword={true}
+            iconName={"key"}
+            placeholder={"Password"}
+            label={"Password"}
+            value={value}
+            onChange={onChange}
+          />
+        )}
+        name="password"
+      />
+      {errors.password && (
+        <Text style={{ color: "#ff8566" }}>{errors.password.message}</Text>
+      )}
+      <TouchableOpacity onPress={() => {}}>
+        <Text className="bottom-1 m-5 left-24 font-bold text-base">
+          Forgot password ?
+        </Text>
+      </TouchableOpacity>
+
       <LinearGradient
-        colors={["#dbeafe", "#ffffff"]}
+        colors={["#194072", "#cbd5e1"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
+        style={{ borderRadius: 100 }}
       >
         <TouchableOpacity
           style={{ justifyContent: "center", alignItems: "center" }}
-          className="border-2 border-blue-100 rounded-xl w-72 h-10"
+          className="w-96 h-14"
+          onPress={handleSubmit(onSubmit)}
         >
-          <Text className="text-blue-900 font-bold text-xl">Login</Text>
+          <Text className="text-white font-bold text-xl">Se connecter</Text>
         </TouchableOpacity>
       </LinearGradient>
+      <View className="top-20 left-20">
+        <DontHaveAccount isLogin={true} />
+      </View>
     </Animated.View>
   );
 };
