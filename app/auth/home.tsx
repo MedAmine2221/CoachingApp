@@ -8,12 +8,13 @@ import {
   Dimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Auth from "./auth";
 import SignUp from "./signUp";
 import { screenHeight } from "@/constants/Const";
 
 export default function Home() {
+  const [openSigninUp, setOpenSigninUp] = useState(false);
   const slideHeight = screenHeight / 1.5;
 
   const slideAnim = useRef(new Animated.Value(slideHeight)).current;
@@ -26,7 +27,7 @@ export default function Home() {
     }).start();
   };
 
-  const slideHeightSignUp = screenHeight / 1.5;
+  const slideHeightSignUp = screenHeight / 1.25;
 
   const slideAnimSignUp = useRef(new Animated.Value(slideHeightSignUp)).current;
 
@@ -36,6 +37,7 @@ export default function Home() {
       duration: 500,
       useNativeDriver: true,
     }).start();
+    setOpenSigninUp(true);
   };
 
   return (
@@ -47,7 +49,7 @@ export default function Home() {
     >
       <Image
         source={require("../../assets/images/coaching.png")}
-        className="w-80"
+        className={openSigninUp ? "w-52 h-52" : "w-80 h-80"}
       />
       <View
         style={{

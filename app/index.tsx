@@ -5,7 +5,7 @@ import { Redirect } from "expo-router";
 const RootPage = () => {
   return (
     <View>
-      <Redirect href={"/auth/home"}></Redirect>
+      <Redirect href={"/app/dashboard"}></Redirect>
     </View>
   );
 };

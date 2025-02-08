@@ -88,9 +88,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
-    borderRadius: 50,
+    borderRadius: 10,
     paddingHorizontal: 10,
-    height: 60,
+    height: 42,
     width: 300,
     position: "relative",
   },
@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     fontSize: 16,
+    top: 5,
   },
   eyeIcon: {
     marginLeft: 10,

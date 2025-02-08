@@ -11,6 +11,7 @@ export default function RootLayout() {
     >
       <Stack.Screen name="index"></Stack.Screen>
       <Stack.Screen name="auth/home"></Stack.Screen>
+      
     </Stack>
   );
 }

@@ -196,7 +196,7 @@ const SignUp: React.FC<AuthProps> = ({ slideHeight, slideAnim }) => {
         >
           <TouchableOpacity
             style={{ justifyContent: "center", alignItems: "center" }}
-            className="w-96 h-14"
+            className="w-80 h-14"
             onPress={handleSubmit(onSubmit)}
           >
             <Text className="text-white font-bold text-xl">Enregistrer</Text>

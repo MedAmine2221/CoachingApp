@@ -13,9 +13,11 @@ import DontHaveAccount from "@/components/DontHaveAccount";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { authFormType, authSchema } from "@/schema/schemaAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "expo-router";
 
 const Auth: React.FC<AuthProps> = ({ slideHeight, slideAnim }) => {
   const panResponder = gestHandler({ slideHeight, slideAnim });
+  const router = useRouter();
   const {
     control,
     handleSubmit,
@@ -23,9 +25,10 @@ const Auth: React.FC<AuthProps> = ({ slideHeight, slideAnim }) => {
   } = useForm<authFormType>({
     resolver: zodResolver(authSchema),
   });
+  //     console.log(data);
 
   const onSubmit: SubmitHandler<authFormType> = (data: authFormType) => {
-    console.log(data);
+    router.push("/app/dashboard");
   };
   return (
     <Animated.View
